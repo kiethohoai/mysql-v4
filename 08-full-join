@@ -1,0 +1,8 @@
+#8 Full Join
+ select * from test.customers
+ left join test.orders
+ on customers.customer_id = orders.customer_id
+ union
+ select * from test.customers
+ right join test.orders
+ on customers.customer_id = orders.customer_id;

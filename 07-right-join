@@ -1,4 +1,4 @@
-#7 - Right Join
+#7 Right Join
 -- Tim Khach Hang da mua san pham vao thang 10
 select ifnull(concat(last_name, " ", first_name), "Unknow") as fullName , order_date from test.customers
 right join test.orders
