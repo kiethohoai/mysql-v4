@@ -1,0 +1,113 @@
+drop database if exists test;
+create database test;
+use test;
+
+#1 customers table
+create table customers(
+	customer_id int primary key auto_increment not null,
+    first_name varchar(150) not null,
+    last_name varchar(160) not null, 
+    email varchar(200) not null,
+    birthday date not null
+);
+
+insert into test.customers(first_name, last_name, email, birthday)
+value ("Hoang", "Nguyen", "nphao@gmail.com", "1998-05-11"),
+("Thao", "Truong", "ttthao@gmail.com", "1999-12-10");
+
+insert into test.customers(first_name, last_name, email, birthday)
+value ("Mini", "Nguyen", "mini@gmail.com", "1997-05-15");
+
+
+select * from test.customers;
+
+#2 orders table
+create table orders(
+	order_id int primary key auto_increment not null,
+    order_date date not null,
+    price float not null,
+    amount double not null,
+    customer_id int,
+    foreign key (customer_id) references customers(customer_id)
+);
+
+insert into test.orders(order_date, price, amount, customer_id)
+value("2020-11-24", 1000, 70,  1),
+("2020-10-07", 2000, 90, 1 );
+
+insert into test.orders(order_date, price, amount)
+value("2020-10-19", 700, 80),
+("2020-11-20", 900, 50),
+("2020-12-21", 1600, 10);
+
+
+select * from test.orders;
+
+#3 LESSON - 3
+-- C1
+select customer_id from test.customers where first_name = "Hoang";
+select * from test.orders where customer_id = 1;
+
+-- C2
+select * from test.orders where customer_id = (select customer_id from test.customers where first_name = "Hoang");
+select * from test.orders where customer_id = (select customer_id from test.customers where first_name = "Thao");
+
+#4 INNER JOIN
+select * from test.customers , test.orders
+where customers.customer_id = orders.customer_id && first_name = "Hoang";
+
+select * from test.customers , test.orders
+where customers.customer_id = orders.customer_id && first_name = "Hoang";
+
+#5 Inner Join C2
+-- e1
+select * from test.customers
+inner join test.orders
+on customers.customer_id = orders.customer_id
+where first_name = "Hoang";
+
+-- e2 nhung khach hang nao co don dat hang >= 2000
+select concat(first_name , " " , last_name) as full_name  from test.customers
+inner join test.orders
+on customers.customer_id = orders.customer_id
+where price >= 1000;
+
+#6 LEFT-JOIN
+# Fix Strict Mode of MySQL WorkBench  
+set global sql_mode="";
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+-- e1 Lấy ra những khách hàng chưa có đơn đặt hàng
+select * from test.customers
+left join test.orders
+on customers.customer_id = orders.customer_id
+where orders.customer_id is null;
+
+-- e2 Lấy ra những khách hàng đã đặt hangf 
+select * from test.customers
+left join test.orders
+on customers.customer_id = orders.customer_id
+where orders.customer_id is not null;
+
+-- e3 Tim tong so luong san pham da mua cua KH?
+select concat(first_name, " ", last_name) as full_name, ifnull(sum(amount), 0) as total_amount from test.customers
+left join test.orders
+on customers.customer_id = orders.customer_id
+group by customers.customer_id
+order by total_amount desc;
+
+#7 - Right Join
+-- Tim Khach Hang da mua san pham vao thang 10
+select ifnull(concat(last_name, " ", first_name), "Unknow") as fullName , order_date from test.customers
+right join test.orders
+on customers.customer_id = orders.customer_id
+where order_date like "%-10-%";
+
+#8 Full Join
+ select * from test.customers
+ left join test.orders
+ on customers.customer_id = orders.customer_id
+ union
+ select * from test.customers
+ right join test.orders
+ on customers.customer_id = orders.customer_id;

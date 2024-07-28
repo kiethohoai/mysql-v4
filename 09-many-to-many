@@ -1,0 +1,40 @@
+#9 Many to many
+drop database if exists test;
+create database test;
+
+create table test.laptops(
+	id int primary key auto_increment,
+    name varchar(150) not null,
+    description varchar(1000) not null,
+    price double not null
+);
+
+insert into test.laptops(name, description, price)
+value("Macbook M1", "Laptop Xin Nhat Hien Nay" , 4000),
+("Acer Nitro 5", "Laptop Gaming Dinh Cao" , 1500),
+("Dell Gaming G3", "Laptop Gaming Cuc Suong" , 1600);
+
+create table test.stores(
+	id int primary key auto_increment,
+    name varchar(150) not null,
+	address varchar(250) not null
+);
+
+insert into test.stores(name, address)
+value("FPT Shop", "150 Cao Thang Q3 TP. Ho Chi Minh" ),
+("The Gioi Di Dong", "105 3/2 Q10 TP. Ho Chi Minh" ),
+("Dien May Xanh", "203 Dien Bien Phu Q3 TP. Ho Chi Minh");
+
+
+create table test.laptops_stores(
+	id int primary key auto_increment,
+	laptop_id int,
+    store_id int,
+    foreign key (laptop_id) references laptops(id),
+    foreign key (store_id) references stores(id)
+);
+
+insert into test.laptops_stores(laptop_id, store_id) value
+(1, 1), (1,2),
+(2,2), (2,3),
+(3,1), (3,2), (3,3);
