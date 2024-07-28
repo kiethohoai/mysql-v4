@@ -1,0 +1,12 @@
+-- 05 Inner Join C2 -- 
+-- e1
+select * from test.customers
+inner join test.orders
+on customers.customer_id = orders.customer_id
+where first_name = "Hoang";
+
+-- e2 nhung khach hang nao co don dat hang >= 2000
+select * from test.customers
+inner join test.orders
+on customers.customer_id = orders.customer_id
+where price = 2000;
