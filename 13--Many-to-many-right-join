@@ -1,0 +1,16 @@
+#Bai-13--Many-to-many-right-join
+-- Tìm xem Macbook M1 có được bán tại thế giớ di động hay không?
+
+select * from test.laptops
+right join test.laptops_stores
+on laptops.id =  laptops_stores.laptop_id
+right join test.stores
+on stores.id = laptops_stores.store_id
+where laptops.name = "Macbook M1" && stores.name = "The Gioi Di Dong";
+
+# select * from test.laptops
+# inner join test.laptops_stores
+# on laptops.id =  laptops_stores.laptop_id
+# inner join test.stores
+# on stores.id = laptops_stores.store_id
+# where laptops.name = "Macbook M1" && stores.name = "The Gioi Di Dong"
