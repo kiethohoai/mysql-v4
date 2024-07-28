@@ -4,3 +4,5 @@
 #8 Full Join
 #9 Many to many
 #10 Many-to-many-inner
+#11 Inner Join V2
+#12--Many-to-many-Left-join

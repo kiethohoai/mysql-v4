@@ -1,0 +1,9 @@
+#Bai-12--Many-to-many-Left-join
+-- Tim xem cac laptop chua ban dc tai nhung cua hang?
+
+select laptops.name, laptops.price from test.laptops
+left join test.laptops_stores
+on laptops.id = laptops_stores.laptop_id
+left join test.stores
+on laptops_stores.store_id = stores.id
+where stores.id is null;

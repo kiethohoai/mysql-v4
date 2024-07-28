@@ -1,0 +1,8 @@
+#11 Inner Join V2
+-- c2 Tim xem Macbook dang duoc ban tai nhung cua hang nao?
+select stores.name from test.laptops
+inner join test.laptops_stores
+on laptops.id = laptops_stores.laptop_id
+inner join test.stores
+on laptops_stores.store_id = stores.id
+where laptops.name = "Macbook M1"
