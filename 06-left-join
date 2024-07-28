@@ -1,0 +1,23 @@
+#6 LEFT-JOIN
+# Fix Strict Mode of MySQL WorkBench  
+set global sql_mode="";
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+-- e1 Lấy ra những khách hàng chưa có đơn đặt hàng
+select * from test.customers
+left join test.orders
+on customers.customer_id = orders.customer_id
+where orders.customer_id is null;
+
+-- e2 Lấy ra những khách hàng đã đặt hangf 
+select * from test.customers
+left join test.orders
+on customers.customer_id = orders.customer_id
+where orders.customer_id is not null;
+
+-- e3 Tim tong so luong san pham da mua cua KH?
+select concat(first_name, " ", last_name) as full_name, ifnull(sum(amount), 0) as total_amount from test.customers
+left join test.orders
+on customers.customer_id = orders.customer_id
+group by customers.customer_id
+order by total_amount desc;
