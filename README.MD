@@ -3,3 +3,4 @@
 #7 Right Join
 #8 Full Join
 #9 Many to many
+#10 Many-to-many-inner

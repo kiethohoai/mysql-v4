@@ -1,0 +1,10 @@
+#10 Many-to-many-inner
+-- c1 Tim xem DMX dang ban nhung mau laptops nao? (lam viec voi 2 bang)
+	-- join bang, tim DMX, lay ra ten & gia laptop
+
+select laptops.name, laptops.price from test.stores
+inner join test.laptops_stores
+on stores.id = laptops_stores.store_id
+inner join test.laptops
+on laptops.id = laptops_stores.laptop_id
+where stores.name = "Dien May Xanh";
